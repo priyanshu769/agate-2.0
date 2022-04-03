@@ -1,9 +1,10 @@
 import './App.css'
+import {ProductsPage} from './Pages'
 
 function App() {
   return (
     <div className="App">
-      <p>App in development.</p>
+    <ProductsPage />
     </div>
   )
 }

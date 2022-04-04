@@ -4,10 +4,13 @@
   --primary-color: #3F37C9;
   --primary-dark: #0D1117;
   --dark-grey: #374151;
+  --off-grey: #B7B7A4;
   --off-white: #F3F4F6;
-  --white: #ffffff;
+  --white: #FFFFFF;
 }
 
 .App {
   font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
 }

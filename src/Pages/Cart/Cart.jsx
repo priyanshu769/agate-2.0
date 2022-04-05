@@ -1,6 +1,6 @@
 import React from 'react'
 import './Cart.css'
-import { CartProductCard } from '../../Components/CartProductCard/CartProductCard'
+import { CartProductCard } from '../../Components'
 
 export const Cart = () => {
   return (

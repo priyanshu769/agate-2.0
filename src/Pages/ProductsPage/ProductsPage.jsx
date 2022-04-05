@@ -1,53 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ProductsPage.css'
 import { ProductCard } from '../../Components'
+import axios from 'axios'
 
 export const ProductsPage = () => {
-  const [productName, setProductName] = useState("Product's Name Even If It's Big")
+  const [products, setProducts] = useState([])
+
+  useEffect(()=> {
+    (async() => {
+      try{
+        const serverResponse = await axios.get('https://api-agate.herokuapp.com/products/')
+        if (serverResponse.status===200) {
+          setProducts(serverResponse.data.products)
+        }
+      } catch {
+        console.log('Server response failed.')
+      }
+    })()
+  }, [])
+
   return (
     <div className="productsContainer">
-      <ProductCard
-        productImg="https://images.unsplash.com/photo-1543163521-1bf539c55dd2"
-        productName={productName.slice(0, 17)}
-        productPrice={2999}
+    {products.map(product => {
+      return (
+        <ProductCard
+        productImg={product.image}
+        productName={product.name.slice(0, 17)}
+        productPrice={product.price}
         productCardBtnText="Add To Cart"
         wishListBtnStyle={false}
-      />
-      <ProductCard
-        productImg="https://images.unsplash.com/photo-1543163521-1bf539c55dd2"
-        productName={productName.slice(0, 17)}
-        productPrice={2999}
-        productCardBtnText="Add To Cart"
-        wishListBtnStyle={false}
-      />
-      <ProductCard
-        productImg="https://images.unsplash.com/photo-1543163521-1bf539c55dd2"
-        productName={productName.slice(0, 17)}
-        productPrice={2999}
-        productCardBtnText="Add To Cart"
-        wishListBtnStyle={true}
-      />
-      <ProductCard
-        productImg="https://images.unsplash.com/photo-1543163521-1bf539c55dd2"
-        productName={productName.slice(0, 17)}
-        productPrice={2999}
-        productCardBtnText="Add To Cart"
-        wishListBtnStyle={true}
-      />
-      <ProductCard
-        productImg="https://images.unsplash.com/photo-1543163521-1bf539c55dd2"
-        productName={productName.slice(0, 17)}
-        productPrice={2999}
-        productCardBtnText="Add To Cart"
-        wishListBtnStyle={false}
-      />
-      <ProductCard
-        productImg="https://images.unsplash.com/photo-1543163521-1bf539c55dd2"
-        productName={productName.slice(0, 17)}
-        productPrice={2999}
-        productCardBtnText="Add To Cart"
-        wishListBtnStyle={false}
-      />
+        />
+      )
+    })}
     </div>
   )
 }

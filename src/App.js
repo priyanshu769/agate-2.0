@@ -1,12 +1,11 @@
 import './App.css'
-import {ProductsPage} from './Pages'
-import { Cart } from './Pages';
-import { Wishlist } from './Pages';
+import {ProductsPage, Cart, Wishlist, Login, Signup} from './Pages'
 
 function App() {
   return (
     <div className="App">
-    <Wishlist />
+    <Login />
+    <Signup />
     </div>
   )
 }

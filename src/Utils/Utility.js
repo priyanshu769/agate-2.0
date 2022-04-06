@@ -47,3 +47,12 @@ export const loadUser = async (userToken, authDispatch) => {
     console.log('Error Occured', error)
   }
 }
+
+// Buttons
+
+export const wishListBtnStyle = (productId, user) => {
+    const productInWishlist = user?.wishlist.find(item => item._id === productId)
+    if (productInWishlist) {
+        return true
+    } else return false
+}

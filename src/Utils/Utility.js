@@ -4,7 +4,8 @@ export const loginHandler = async (
   loggedInToken,
   email,
   password,
-  dispatch,
+  authDispatch,
+  appDispatch,
   setWrongCredentials,
   navigate,
 ) => {
@@ -20,11 +21,12 @@ export const loginHandler = async (
           'loggedInAgate',
           JSON.stringify({ token: loginResponse.data.token }),
         )
-        dispatch({ TYPE: 'set_user', PAYLOAD: loginResponse.data.user })
-        dispatch({
+        authDispatch({ TYPE: 'set_user', PAYLOAD: loginResponse.data.user })
+        authDispatch({
           TYPE: 'set_loggedInToken',
           PAYLOAD: loginResponse.data.token,
         })
+        loadCart(loginResponse.data.token, appDispatch)
         navigate('/')
       }
     } catch (error) {
@@ -46,6 +48,17 @@ export const loadUser = async (userToken, authDispatch) => {
   } catch (error) {
     console.log('Error Occured', error)
   }
+}
+export const loadCart = async(userToken, appDispatch) => {
+    try{
+        const cartResponse = await axios.get('https://api-agate.herokuapp.com/cart/', {headers: {Authorization: userToken}})
+        if (cartResponse.data.success) {
+            console.log(cartResponse.data)
+            appDispatch({TYPE: 'set_cart', PAYLOAD: cartResponse.data.cartProducts})
+        }
+    } catch (error) {
+        console.log('Some Error Occured', error)
+    }
 }
 
 // Buttons

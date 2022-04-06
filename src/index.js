@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthProvider } from './Context/AuthContext'
+import { AppProvider } from './Context/AppContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <Router>
-        <App />
+        <AppProvider>
+          <App />
+        </AppProvider>
       </Router>
     </AuthProvider>
   </React.StrictMode>,

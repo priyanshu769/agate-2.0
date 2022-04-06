@@ -3,16 +3,16 @@ import './LoginSignup.css'
 import { Link } from 'react-router-dom'
 import { loginHandler } from '../../Utils'
 import { useAuth } from '../../Context/AuthContext'
+import { useApp } from '../../Context/AppContext'
 import {useNavigate} from 'react-router'
 
 export const Login = () => {
   const { auth, authDispatch } = useAuth()
+  const { appDispatch } = useApp()
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const [wrongCredentials, setWrongCredentials] = useState(false)
   const navigate = useNavigate()
-  console.log(auth)
-  console.log(wrongCredentials)
 
   const loggingIn = () => {
     loginHandler(
@@ -20,6 +20,7 @@ export const Login = () => {
       email,
       password,
       authDispatch,
+      appDispatch,
       setWrongCredentials,
       navigate
     )

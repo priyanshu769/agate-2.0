@@ -4,7 +4,6 @@ export const InitialAuth = {
 }
 
 export const AuthReducer = (state, action) => {
-    console.log('auth dispatch triggered')
     switch (action.TYPE) {
         case 'set_user':
             return {...state, user: action.PAYLOAD}

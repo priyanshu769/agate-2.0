@@ -1,9 +1,21 @@
 import './App.css'
 import { ProductsPage, Cart, Wishlist, Login, Signup } from './Pages'
 import { Routes, Route, Link } from 'react-router-dom'
-import { PrivateRoute, ReversePrivateRoute } from './Utils'
+import { PrivateRoute, ReversePrivateRoute, loadUser } from './Utils'
+import { useEffect } from 'react'
+import { useAuth } from './Context/AuthContext'
 
 function App() {
+  const {auth, authDispatch} = useAuth()
+  useEffect(() => {
+    const localStorageLoggedInToken = JSON.parse(localStorage.getItem('loggedInAgate'))
+    if (localStorageLoggedInToken) {
+      authDispatch({TYPE: 'set_loggedInToken', PAYLOAD: localStorageLoggedInToken.token})
+      loadUser(localStorageLoggedInToken.token, authDispatch)
+    }
+  }, [authDispatch])
+  console.log(auth)
+
   return (
     <div className="App">
       <nav className="navbar">

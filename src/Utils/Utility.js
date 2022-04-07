@@ -85,6 +85,32 @@ export const addTocartHandle = async (
   }
 }
 
+export const removeFromCartHandle = async (
+  productId,
+  userToken,
+  appDispatch,
+  navigate,
+) => {
+  console.log('removeFromCartHandle fired 1')
+  try {
+    if (userToken) {
+      console.log('removeFromCartHandle fired 2')
+      const removeFromCartResponse = await axios.post(
+        `https://api-agate.herokuapp.com/cart/${productId}/remove`,
+        {},
+        { headers: { Authorization: userToken } },
+        )
+        console.log(removeFromCartResponse.data)
+        if (removeFromCartResponse.data.success) {
+        console.log('removeFromCartHandle fired 3')
+        loadCart(userToken, appDispatch)
+      }
+    } else navigate('/login')
+  } catch (error) {
+    console.log('Some Error Occured', error)
+  }
+}
+
 // Buttons
 
 export const wishListBtnStyle = (productId, user) => {

@@ -16,7 +16,7 @@ export const CartProductCard = (props) => {
         <p className="cartProductName">{props.productName}</p>
         <p className="cartProductPrice">$ {props.productPrice}</p>
         <p className="cardBtnContainer">
-          <button className="removeBtn">Remove</button>
+          <button className="removeBtn" onClick={props.removeFromCartHandle}>Remove</button>
           <button className="addToWishlistBtn">
             {props.wishListBtnStyle ? <BsFillHeartFill /> : <BsHeart />}
           </button>

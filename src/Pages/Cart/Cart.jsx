@@ -1,13 +1,15 @@
 import React from 'react'
 import './Cart.css'
 import { CartProductCard } from '../../Components'
-import { useApp } from '../../Context/AppContext'
-import { wishListBtnStyle } from '../../Utils'
+import { wishListBtnStyle, removeFromCartHandle } from '../../Utils'
 import { useAuth } from '../../Context/AuthContext'
+import { useApp } from '../../Context/AppContext'
+import { useNavigate } from 'react-router'
 
 export const Cart = () => {
   const { auth } = useAuth()
-  const { app } = useApp()
+  const { app, appDispatch } = useApp()
+  const navigate = useNavigate()
   return (
     <div>
       <h2 className="cartHeading">Your Cart:</h2>
@@ -19,6 +21,12 @@ export const Cart = () => {
                 productImg={cartItem.product.image}
                 productName={cartItem.product.name}
                 productPrice={cartItem.product.price}
+                removeFromCartHandle={() => removeFromCartHandle(
+                  cartItem._id,
+                  auth.loggedInToken,
+                  appDispatch,
+                  navigate,
+                )}
                 wishListBtnStyle={wishListBtnStyle(
                   cartItem.product._id,
                   auth.user,

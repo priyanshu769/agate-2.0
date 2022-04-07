@@ -17,6 +17,7 @@ export const ProductCard = (props) => {
       <p className="productPrice">$ {props.productPrice}</p>
       <p className="cardBtnContainer">
         <button
+          onClick={props.addToCartHandle}
           disabled={props.productCardBtnText === 'Already in Cart'}
           className="addToCartBtn"
         >

@@ -7,7 +7,7 @@ import { useAuth } from './Context/AuthContext'
 import { useApp } from './Context/AppContext'
 
 function App() {
-  const { authDispatch } = useAuth()
+  const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
   useEffect(() => {
     const localStorageLoggedInToken = JSON.parse(
@@ -22,7 +22,7 @@ function App() {
       loadCart(localStorageLoggedInToken.token, appDispatch)
     }
   }, [authDispatch, appDispatch])
-  console.log(app)
+  console.log(app, auth)
   return (
     <div className="App">
       <nav className="navbar">

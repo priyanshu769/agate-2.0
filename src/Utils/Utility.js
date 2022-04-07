@@ -49,29 +49,55 @@ export const loadUser = async (userToken, authDispatch) => {
     console.log('Error Occured', error)
   }
 }
-export const loadCart = async(userToken, appDispatch) => {
-    try{
-        const cartResponse = await axios.get('https://api-agate.herokuapp.com/cart/', {headers: {Authorization: userToken}})
-        if (cartResponse.data.success) {
-            console.log(cartResponse.data)
-            appDispatch({TYPE: 'set_cart', PAYLOAD: cartResponse.data.cartProducts})
-        }
-    } catch (error) {
-        console.log('Some Error Occured', error)
+export const loadCart = async (userToken, appDispatch) => {
+  try {
+    const cartResponse = await axios.get(
+      'https://api-agate.herokuapp.com/cart/',
+      { headers: { Authorization: userToken } },
+    )
+    if (cartResponse.data.success) {
+      appDispatch({ TYPE: 'set_cart', PAYLOAD: cartResponse.data.cartProducts })
     }
+  } catch (error) {
+    console.log('Some Error Occured', error)
+  }
+}
+
+export const addTocartHandle = async (
+  productId,
+  userToken,
+  appDispatch,
+  navigate,
+) => {
+  try {
+    if (userToken) {
+      const addToCartResponse = await axios.post(
+        `https://api-agate.herokuapp.com/cart/${productId}/add`,
+        {},
+        { headers: { Authorization: userToken } },
+      )
+      if (addToCartResponse.data.success) {
+        loadCart(userToken, appDispatch)
+      } else console.log('Unable to add to Cart.')
+    } else navigate('/login')
+  } catch (error) {
+    console.log('Unable to add to Cart', error)
+  }
 }
 
 // Buttons
 
 export const wishListBtnStyle = (productId, user) => {
-    const productInWishlist = user?.wishlist.find(item => item._id === productId)
-    if (productInWishlist) {
-        return true
-    } else return false
+  const productInWishlist = user?.wishlist.find(
+    (item) => item._id === productId,
+  )
+  if (productInWishlist) {
+    return true
+  } else return false
 }
 
 export const addToCarBtnStyle = (productId, cart) => {
-  const productInCart = cart?.find(item => item.product._id === productId)
+  const productInCart = cart?.find((item) => item.product._id === productId)
   if (productInCart) {
     return 'Already in Cart'
   } else return 'Add To Cart'

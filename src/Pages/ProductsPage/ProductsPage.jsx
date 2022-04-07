@@ -4,13 +4,15 @@ import { ProductCard } from '../../Components'
 import axios from 'axios'
 import { useAuth } from '../../Context/AuthContext'
 import { useApp } from '../../Context/AppContext'
-import { wishListBtnStyle, addToCarBtnStyle } from '../../Utils'
+import { wishListBtnStyle, addToCarBtnStyle,addTocartHandle } from '../../Utils'
+import { useNavigate } from 'react-router'
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([])
   const { auth } = useAuth()
-  const { app } = useApp()
-
+  const { app, appDispatch } = useApp()
+  const navigate = useNavigate()
+  console.log(products[0])
   useEffect(() => {
     ;(async () => {
       try {
@@ -34,6 +36,14 @@ export const ProductsPage = () => {
             productImg={product.image}
             productName={product.name.slice(0, 17)}
             productPrice={product.price}
+            addToCartHandle={() => 
+              addTocartHandle(
+                product._id,
+                auth.loggedInToken,
+                appDispatch,
+                navigate,
+              )
+            }
             productCardBtnText={addToCarBtnStyle(product._id, app.cart)}
             wishListBtnStyle={wishListBtnStyle(product._id, auth.user)}
           />

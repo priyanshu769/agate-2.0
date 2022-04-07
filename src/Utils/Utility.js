@@ -111,6 +111,19 @@ export const removeFromCartHandle = async (
   }
 }
 
+export const addToWishlistHandle = async (productId, userToken, authDispatch, navigate) => {
+  if(userToken){
+    try {
+      const addToWishlistResposne = await axios.post('https://api-agate.herokuapp.com/user/wishlistProduct', {productId: productId}, {headers: {Authorization: userToken}})
+      if(addToWishlistResposne.data.success) {
+        loadUser(userToken, authDispatch)
+      } else console.log('Unable to add product to wishlist.')
+    } catch (error) {
+      console.log("Something went worng while adding product to wishlist.", error)
+    }
+  } else navigate('/login')
+}
+
 // Buttons
 
 export const wishListBtnStyle = (productId, user) => {

@@ -3,12 +3,11 @@ import './Wishlist.css'
 import { ProductCard } from '../../Components'
 import { useAuth } from '../../Context/AuthContext'
 import { useApp } from '../../Context/AppContext'
-import { addToCarBtnStyle } from '../../Utils'
+import { addToCarBtnStyle, addTocartHandle, addToWishlistHandle } from '../../Utils'
 import { useNavigate } from 'react-router'
-import { addTocartHandle } from '../../Utils'
 
 export const Wishlist = () => {
-  const { auth } = useAuth()
+  const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
   const navigate = useNavigate()
   return (
@@ -24,6 +23,14 @@ export const Wishlist = () => {
                 wishedItem._id,
                 auth.loggedInToken,
                 appDispatch,
+                navigate,
+              )
+            }
+            addToWishlistHandle={() =>
+              addToWishlistHandle(
+                wishedItem._id,
+                auth.loggedInToken,
+                authDispatch,
                 navigate,
               )
             }

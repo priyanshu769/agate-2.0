@@ -4,12 +4,17 @@ import { ProductCard } from '../../Components'
 import axios from 'axios'
 import { useAuth } from '../../Context/AuthContext'
 import { useApp } from '../../Context/AppContext'
-import { wishListBtnStyle, addToCarBtnStyle,addTocartHandle } from '../../Utils'
+import {
+  wishListBtnStyle,
+  addToCarBtnStyle,
+  addTocartHandle,
+  addToWishlistHandle
+} from '../../Utils'
 import { useNavigate } from 'react-router'
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([])
-  const { auth } = useAuth()
+  const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
   const navigate = useNavigate()
   console.log(products[0])
@@ -36,11 +41,19 @@ export const ProductsPage = () => {
             productImg={product.image}
             productName={product.name.slice(0, 17)}
             productPrice={product.price}
-            addToCartHandle={() => 
+            addToCartHandle={() =>
               addTocartHandle(
                 product._id,
                 auth.loggedInToken,
                 appDispatch,
+                navigate,
+              )
+            }
+            addToWishlistHandle={() =>
+              addToWishlistHandle(
+                product._id,
+                auth.loggedInToken,
+                authDispatch,
                 navigate,
               )
             }

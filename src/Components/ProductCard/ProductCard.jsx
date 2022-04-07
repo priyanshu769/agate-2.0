@@ -23,7 +23,7 @@ export const ProductCard = (props) => {
         >
           {props.productCardBtnText}
         </button>
-        <button className="addToWishlistBtn">
+        <button onClick={props.addToWishlistHandle} className="addToWishlistBtn">
           {props.wishListBtnStyle ? <BsFillHeartFill /> : <BsHeart />}
         </button>
       </p>

@@ -5,11 +5,16 @@
 
 .productImg {
     max-width: 100%;
+    max-height: 10rem;
 }
 
 .productName {
     font-size: 100;
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.productPrice {
+    font-weight: 600;
 }
 
 .cardBtnContainer {
@@ -28,6 +33,7 @@
 
 .addToCartBtn:disabled {
     cursor: not-allowed;
+    color: var(--off-grey);
     background-color: var(--dark-grey);
 }
 
@@ -40,7 +46,11 @@
 
 @media only screen and (max-width: 480px) {
     .productCard {
-        width: 10rem;
+        width: 9rem;
+    }
+
+    .productImg {
+        max-height: 7rem;
     }
 
     .productName {

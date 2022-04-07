@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="App">
       <nav className="navbar">
-        <ul>
+        <ul className='navBullets'>
           <li className="navBullet">
             <Link className="navLink" activeclassname="selectedNavPill" to="/">
               Home

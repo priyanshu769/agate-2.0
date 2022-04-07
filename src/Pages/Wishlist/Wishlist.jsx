@@ -2,9 +2,12 @@ import React from 'react'
 import './Wishlist.css'
 import { ProductCard } from '../../Components'
 import { useAuth } from '../../Context/AuthContext'
+import { useApp } from '../../Context/AppContext'
+import { addToCarBtnStyle } from '../../Utils'
 
 export const Wishlist = () => {
   const { auth } = useAuth()
+  const { app } = useApp()
   return (
     <div className="wishlistProductsContainer">
       {auth.user?.wishlist.map((wishedItem) => {
@@ -13,7 +16,7 @@ export const Wishlist = () => {
             productImg={wishedItem.image}
             productName={wishedItem.name}
             productPrice={wishedItem.price}
-            productCardBtnText="Add To Cart"
+            productCardBtnText={addToCarBtnStyle(wishedItem._id, app.cart)}
             wishListBtnStyle={true}
           />
         )

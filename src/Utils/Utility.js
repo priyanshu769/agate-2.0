@@ -69,3 +69,10 @@ export const wishListBtnStyle = (productId, user) => {
         return true
     } else return false
 }
+
+export const addToCarBtnStyle = (productId, cart) => {
+  const productInCart = cart?.find(item => item.product._id === productId)
+  if (productInCart) {
+    return 'Already in Cart'
+  } else return 'Add To Cart'
+}

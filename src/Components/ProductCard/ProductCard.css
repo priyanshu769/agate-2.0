@@ -26,6 +26,11 @@
     background-color: var(--primary-color);
 }
 
+.addToCartBtn:disabled {
+    cursor: not-allowed;
+    background-color: var(--dark-grey);
+}
+
 .addToWishlistBtn {
     cursor: pointer;
     padding: 0.5rem;

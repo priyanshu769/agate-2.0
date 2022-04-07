@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react'
-import { InitialApp, AppReducer } from '../Utils/AppReducer'
+import { InitialApp, AppReducer } from '../Utils'
 
 export const App = createContext()
 

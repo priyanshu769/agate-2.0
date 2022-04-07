@@ -2,7 +2,6 @@ import React from 'react'
 import './ProductCard.css'
 import { BsHeart, BsFillHeartFill } from 'react-icons/bs'
 
-
 export const ProductCard = (props) => {
   return (
     <div className="productCard">
@@ -17,9 +16,14 @@ export const ProductCard = (props) => {
       </p>
       <p className="productPrice">$ {props.productPrice}</p>
       <p className="cardBtnContainer">
-        <button className="addToCartBtn">{props.productCardBtnText}</button>
+        <button
+          disabled={props.productCardBtnText === 'Already in Cart'}
+          className="addToCartBtn"
+        >
+          {props.productCardBtnText}
+        </button>
         <button className="addToWishlistBtn">
-          {props.wishListBtnStyle ? <BsFillHeartFill /> : <BsHeart /> }
+          {props.wishListBtnStyle ? <BsFillHeartFill /> : <BsHeart />}
         </button>
       </p>
     </div>

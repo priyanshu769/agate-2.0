@@ -19,17 +19,39 @@
   background-color: var(--primary-color);
 }
 
+.navbarAbsolute {
+  width: 50%;
+  margin: auto;
+  margin-top: 0.5rem;
+  background-color: var(--primary-color);
+  position: absolute;
+}
+
 .navBullets {
   margin: 0 -1rem;
 }
 
 .navBullet {
+  color: var(--off-white);
   display: inline-block;
   font-weight: 900;
   padding: 1rem;
 }
 
 .navLink {
-  color: var(--off-white);
+  color: inherit;
   text-decoration: none;
+}
+
+.navBtn {
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  font-weight: 500;
+  font-size: medium;
+}
+
+.displayHidden {
+  display: none;
 }

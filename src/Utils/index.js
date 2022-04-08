@@ -9,6 +9,7 @@ export {
   addTocartHandle,
   removeFromCartHandle,
   addToWishlistHandle,
+  logoutHandle,
 } from './Utility'
 export { PrivateRoute } from './PrivateRoute.jsx'
 export { ReversePrivateRoute } from './ReversePrivateRoute.jsx'

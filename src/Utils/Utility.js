@@ -99,9 +99,9 @@ export const removeFromCartHandle = async (
         `https://api-agate.herokuapp.com/cart/${productId}/remove`,
         {},
         { headers: { Authorization: userToken } },
-        )
-        console.log(removeFromCartResponse.data)
-        if (removeFromCartResponse.data.success) {
+      )
+      console.log(removeFromCartResponse.data)
+      if (removeFromCartResponse.data.success) {
         console.log('removeFromCartHandle fired 3')
         loadCart(userToken, appDispatch)
       }
@@ -111,17 +111,43 @@ export const removeFromCartHandle = async (
   }
 }
 
-export const addToWishlistHandle = async (productId, userToken, authDispatch, navigate) => {
-  if(userToken){
+export const addToWishlistHandle = async (
+  productId,
+  userToken,
+  authDispatch,
+  navigate,
+) => {
+  if (userToken) {
     try {
-      const addToWishlistResposne = await axios.post('https://api-agate.herokuapp.com/user/wishlistProduct', {productId: productId}, {headers: {Authorization: userToken}})
-      if(addToWishlistResposne.data.success) {
+      const addToWishlistResposne = await axios.post(
+        'https://api-agate.herokuapp.com/user/wishlistProduct',
+        { productId: productId },
+        { headers: { Authorization: userToken } },
+      )
+      if (addToWishlistResposne.data.success) {
         loadUser(userToken, authDispatch)
       } else console.log('Unable to add product to wishlist.')
     } catch (error) {
-      console.log("Something went worng while adding product to wishlist.", error)
+      console.log(
+        'Something went worng while adding product to wishlist.',
+        error,
+      )
     }
   } else navigate('/login')
+}
+
+export const logoutHandle = async (userToken, authDispatch) => {
+  if (userToken) {
+    localStorage.removeItem('loggedInAgate')
+    authDispatch({
+      TYPE: 'set_loggedInToken',
+      PAYLOAD: null,
+    })
+    authDispatch({
+      TYPE: 'set_user',
+      PAYLOAD: null,
+    })
+  } else console.log('You are not logged in.')
 }
 
 // Buttons

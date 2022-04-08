@@ -36,6 +36,32 @@ export const loginHandler = async (
   }
 }
 
+export const signupHandle = async (userToken, name, username, email, password, authDispatch) => {
+  try {
+    if(!userToken){
+    const signupResponse = await axios.post(
+      'https://api-agate.herokuapp.com/signup',
+      {
+        name: name,
+        username: username,
+        email: email,
+        password: password,
+      },
+    )
+    if (signupResponse.data.success) {
+      localStorage.setItem(
+        'loggedInAgate',
+        JSON.stringify({ token: signupResponse.data.token }),
+      )
+      authDispatch({TYPE: 'set_loggedInToken', PAYLOAD: signupResponse.data.token})
+      authDispatch({TYPE: 'set_user', PAYLOAD: signupResponse.data.user})
+    }
+  } else console.log('User already logged in.')
+  } catch (error) {
+    console.log('Something went wrong', error)
+  }
+}
+
 export const loadUser = async (userToken, authDispatch) => {
   try {
     const userResponse = await axios.get(

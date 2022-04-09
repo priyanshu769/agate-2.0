@@ -176,6 +176,34 @@ export const logoutHandle = async (userToken, authDispatch) => {
   } else console.log('You are not logged in.')
 }
 
+// Sort & Filter
+
+export const onlyFastDelivery = (productsList, fastDelivery) => {
+  if(fastDelivery) {
+    const fastDeliveryProductsList = productsList.filter(product => product.fastDelivery)
+    return fastDeliveryProductsList
+  } else return productsList
+}
+
+export const excludeOutOfStock = (productsList, wholeInventory) => {
+  if (!wholeInventory) {
+    const excludeOutOfStock = productsList.filter(product => product.stock)
+    return excludeOutOfStock
+  } else return productsList
+}
+
+export const sortProducts = (productsList, sortType) => {
+  if (sortType === "low_to_high") {
+    const lowToHighProducts = productsList.sort((productA, productB) => productA['price'] - productB['price'])
+    return lowToHighProducts
+  } else if (sortType === "high_to_low") {
+    const highToLowProducts = productsList.sort((productA, productB) => productB['price'] - productA['price'])
+    return highToLowProducts
+  } else if (sortType === "relevance") {
+    return productsList
+  }
+}
+
 // Buttons
 
 export const wishListBtnStyle = (productId, user) => {

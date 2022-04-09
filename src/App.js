@@ -1,7 +1,13 @@
 import './App.css'
 import { ProductsPage, Cart, Wishlist, Login, Signup } from './Pages'
 import { Routes, Route, Link } from 'react-router-dom'
-import { PrivateRoute, ReversePrivateRoute, loadUser, loadCart, logoutHandle } from './Utils'
+import {
+  PrivateRoute,
+  ReversePrivateRoute,
+  loadUser,
+  loadCart,
+  logoutHandle,
+} from './Utils'
 import { useEffect, useState } from 'react'
 import { useAuth } from './Context/AuthContext'
 import { useApp } from './Context/AppContext'

@@ -8,7 +8,10 @@ import {
   wishListBtnStyle,
   addToCarBtnStyle,
   addTocartHandle,
-  addToWishlistHandle
+  addToWishlistHandle,
+  onlyFastDelivery,
+  excludeOutOfStock,
+  sortProducts,
 } from '../../Utils'
 import { useNavigate } from 'react-router'
 
@@ -17,7 +20,13 @@ export const ProductsPage = () => {
   const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
   const navigate = useNavigate()
-  console.log(products[0])
+  const productsToDisplay = sortProducts(
+    onlyFastDelivery(
+      excludeOutOfStock(products, app.wholeInventory),
+      app.fastDelivery,
+    ),
+    app.sortType,
+  )
   useEffect(() => {
     ;(async () => {
       try {
@@ -32,36 +41,69 @@ export const ProductsPage = () => {
       }
     })()
   }, [])
-
   return (
-    <div className="productsContainer">
-      {products.map((product) => {
-        return (
-          <ProductCard
-            productImg={product.image}
-            productName={product.name.slice(0, 17)}
-            productPrice={product.price}
-            addToCartHandle={() =>
-              addTocartHandle(
-                product._id,
-                auth.loggedInToken,
-                appDispatch,
-                navigate,
-              )
-            }
-            addToWishlistHandle={() =>
-              addToWishlistHandle(
-                product._id,
-                auth.loggedInToken,
-                authDispatch,
-                navigate,
-              )
-            }
-            productCardBtnText={addToCarBtnStyle(product._id, app.cart)}
-            wishListBtnStyle={wishListBtnStyle(product._id, auth.user)}
-          />
-        )
-      })}
+    <div>
+      <div>
+        <input
+          onChange={() => appDispatch({ TYPE: 'low_to_high' })}
+          checked={app.sortType && app.sortType === 'low_to_high'}
+          type="radio"
+        />
+        <label>Low To High</label>
+        <input
+          onChange={() => appDispatch({ TYPE: 'high_to_low' })}
+          checked={app.sortType && app.sortType === 'high_to_low'}
+          type="radio"
+        />
+        <label>High To Low</label>
+        <input
+          onChange={() => appDispatch({ TYPE: 'relevance' })}
+          checked={app.sortType && app.sortType === 'relevance'}
+          type="radio"
+        />
+        <label>Relevance</label>
+        <input
+          onChange={() => appDispatch({ TYPE: 'set_fastDelivery' })}
+          checked={app.fastDelivery}
+          type="checkbox"
+        />
+        <label>Fast Delivery Only</label>
+        <input
+          onChange={() => appDispatch({ TYPE: 'set_wholeInventory' })}
+          checked={app.wholeInventory}
+          type="checkbox"
+        />
+        <label>Include Out of Stock</label>
+      </div>
+      <div className="productsContainer">
+        {productsToDisplay.map((product) => {
+          return (
+            <ProductCard
+              productImg={product.image}
+              productName={product.name.slice(0, 17)}
+              productPrice={product.price}
+              addToCartHandle={() =>
+                addTocartHandle(
+                  product._id,
+                  auth.loggedInToken,
+                  appDispatch,
+                  navigate,
+                )
+              }
+              addToWishlistHandle={() =>
+                addToWishlistHandle(
+                  product._id,
+                  auth.loggedInToken,
+                  authDispatch,
+                  navigate,
+                )
+              }
+              productCardBtnText={addToCarBtnStyle(product._id, app.cart)}
+              wishListBtnStyle={wishListBtnStyle(product._id, auth.user)}
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }

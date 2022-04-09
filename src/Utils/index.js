@@ -11,6 +11,9 @@ export {
   addToWishlistHandle,
   logoutHandle,
   signupHandle,
+  onlyFastDelivery,
+  excludeOutOfStock,
+  sortProducts
 } from './Utility'
 export { PrivateRoute } from './PrivateRoute.jsx'
 export { ReversePrivateRoute } from './ReversePrivateRoute.jsx'

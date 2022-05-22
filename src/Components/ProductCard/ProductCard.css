@@ -46,7 +46,7 @@
 
 @media only screen and (max-width: 480px) {
     .productCard {
-        width: 9rem;
+        width: 8rem;
     }
 
     .productImg {

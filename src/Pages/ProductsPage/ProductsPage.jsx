@@ -14,9 +14,11 @@ import {
   sortProducts,
 } from '../../Utils'
 import { useNavigate } from 'react-router'
+import { AiOutlineBars } from 'react-icons/ai'
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([])
+  const [showFilters, setShowFilters] = useState(false)
   const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
   const navigate = useNavigate()
@@ -43,7 +45,17 @@ export const ProductsPage = () => {
   }, [])
   return (
     <div>
-      <div>
+      <button
+        className="sortAndFiltersBtn"
+        onClick={() => setShowFilters((showFilters) => !showFilters)}
+      >
+        <AiOutlineBars />
+        Sort/Filters
+      </button>
+      <div
+        style={{ display: showFilters ? 'block' : 'none' }}
+        className="sortAndFilters"
+      >
         <input
           onChange={() => appDispatch({ TYPE: 'low_to_high' })}
           checked={app.sortType && app.sortType === 'low_to_high'}
@@ -62,6 +74,7 @@ export const ProductsPage = () => {
           type="radio"
         />
         <label>Relevance</label>
+        <br />
         <input
           onChange={() => appDispatch({ TYPE: 'set_fastDelivery' })}
           checked={app.fastDelivery}

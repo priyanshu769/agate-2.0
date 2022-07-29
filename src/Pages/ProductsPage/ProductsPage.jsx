@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './ProductsPage.css'
-import { ProductCard } from '../../Components'
+import { Loading, ProductCard } from '../../Components'
 import axios from 'axios'
 import { useAuth } from '../../Context/AuthContext'
 import { useApp } from '../../Context/AppContext'
+import { useToast } from '../../Context/ToastContext'
 import {
   wishListBtnStyle,
   addToCarBtnStyle,
@@ -12,15 +13,19 @@ import {
   onlyFastDelivery,
   excludeOutOfStock,
   sortProducts,
+  showToast,
+  hideToast,
 } from '../../Utils'
 import { useNavigate } from 'react-router'
 import { AiOutlineBars } from 'react-icons/ai'
+
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([])
   const [showFilters, setShowFilters] = useState(false)
   const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
+  const { toastDispatch } = useToast()
   const navigate = useNavigate()
   const productsToDisplay = sortProducts(
     onlyFastDelivery(
@@ -30,7 +35,7 @@ export const ProductsPage = () => {
     app.sortType,
   )
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       try {
         const serverResponse = await axios.get(
           'https://api-agate.herokuapp.com/products/',
@@ -89,27 +94,31 @@ export const ProductsPage = () => {
         <label>Include Out of Stock</label>
       </div>
       <div className="productsContainer">
-        {productsToDisplay.map((product) => {
+        {products.length === 0 ? <Loading /> : productsToDisplay.map((product) => {
           return (
             <ProductCard
               productImg={product.image}
               productName={product.name.slice(0, 17)}
               productPrice={product.price}
-              addToCartHandle={() =>
+              addToCartHandle={() => {
                 addTocartHandle(
                   product._id,
                   auth.loggedInToken,
                   appDispatch,
+                  toastDispatch,
                   navigate,
                 )
               }
-              addToWishlistHandle={() =>
+              }
+              addToWishlistHandle={() => {
                 addToWishlistHandle(
                   product._id,
                   auth.loggedInToken,
                   authDispatch,
+                  toastDispatch,
                   navigate,
                 )
+              }
               }
               productCardBtnText={addToCarBtnStyle(product._id, app.cart)}
               wishListBtnStyle={wishListBtnStyle(product._id, auth.user)}

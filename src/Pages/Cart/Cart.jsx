@@ -4,12 +4,15 @@ import { CartProductCard } from '../../Components'
 import { wishListBtnStyle, removeFromCartHandle, addToWishlistHandle, incrementHandler, decrementHandler, checkoutHandler } from '../../Utils'
 import { useAuth } from '../../Context/AuthContext'
 import { useApp } from '../../Context/AppContext'
+import { useToast } from '../../Context/ToastContext'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+
 
 export const Cart = () => {
   const { auth, authDispatch } = useAuth()
   const { app, appDispatch } = useApp()
+  const { toastDispatch } = useToast()
   const navigate = useNavigate()
 
   const cartPrices = app.cart.map(
@@ -32,16 +35,17 @@ export const Cart = () => {
                 productPrice={cartItem.product.price}
                 disableDecBtn={cartItem.quantity === 1 ? true : ''}
                 decrementFunc={() =>
-                  decrementHandler(cartItem._id, auth.loggedInToken, appDispatch)
+                  decrementHandler(cartItem._id, auth.loggedInToken, appDispatch, toastDispatch, navigate)
                 }
                 quantity={cartItem.quantity}
                 incrementFunc={() =>
-                  incrementHandler(cartItem._id, auth.loggedInToken, appDispatch)
+                  incrementHandler(cartItem._id, auth.loggedInToken, appDispatch, toastDispatch, navigate)
                 }
                 removeFromCartHandle={() => removeFromCartHandle(
                   cartItem._id,
                   auth.loggedInToken,
                   appDispatch,
+                  toastDispatch,
                   navigate,
                 )}
                 addToWishlistHandle={() =>
@@ -49,6 +53,7 @@ export const Cart = () => {
                     cartItem.product._id,
                     auth.loggedInToken,
                     authDispatch,
+                    toastDispatch,
                     navigate,
                   )
                 }

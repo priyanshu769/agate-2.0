@@ -1,5 +1,6 @@
 export { InitialAuth, AuthReducer } from './AuthReducer'
 export { InitialApp, AppReducer } from './AppReducer'
+export { InitialToast, ToastReducer } from './ToastReducer'
 export {
   loginHandler,
   loadUser,
@@ -16,7 +17,9 @@ export {
   sortProducts,
   incrementHandler,
   decrementHandler,
-  checkoutHandler
+  checkoutHandler,
+  showToast,
+  hideToast
 } from './Utility'
 export { PrivateRoute } from './PrivateRoute.jsx'
 export { ReversePrivateRoute } from './ReversePrivateRoute.jsx'

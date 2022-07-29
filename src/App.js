@@ -7,14 +7,18 @@ import {
   loadUser,
   loadCart,
   logoutHandle,
+  hideToast
 } from './Utils'
 import { useEffect, useState } from 'react'
 import { useAuth } from './Context/AuthContext'
 import { useApp } from './Context/AppContext'
+import { useToast } from './Context/ToastContext'
+import { Toast} from './Components'
 
 function App() {
   const { auth, authDispatch } = useAuth()
   const { appDispatch } = useApp()
+  const { toast, toastDispatch } = useToast()
   const [userFeat, setUserFeat] = useState(false)
   useEffect(() => {
     const localStorageLoggedInToken = JSON.parse(
@@ -29,6 +33,14 @@ function App() {
       loadCart(localStorageLoggedInToken.token, appDispatch)
     }
   }, [authDispatch, appDispatch])
+
+  useEffect(() => {
+    if(toast.showToast){
+      setTimeout(() => hideToast(toastDispatch), 4000)
+    }
+  }, [toast, toastDispatch])
+  
+
   return (
     <div className="App">
       <nav className="navbar">
@@ -87,6 +99,7 @@ function App() {
           </li>
         </ul>
       </div>
+      {toast.showToast && <Toast toastMessage={toast.toastMessage} />}
       <Routes>
         <Route exact path="/" element={<ProductsPage />} />
         <Route exact path="/wishlist" element={<PrivateRoute />}>

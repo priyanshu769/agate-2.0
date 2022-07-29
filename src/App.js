@@ -1,5 +1,5 @@
 import './App.css'
-import { ProductsPage, Cart, Wishlist, Login, Signup } from './Pages'
+import { ProductsPage, Cart, Wishlist, Login, Signup, Checkout } from './Pages'
 import { Routes, Route, Link } from 'react-router-dom'
 import {
   PrivateRoute,
@@ -14,7 +14,7 @@ import { useApp } from './Context/AppContext'
 
 function App() {
   const { auth, authDispatch } = useAuth()
-  const { app, appDispatch } = useApp()
+  const { appDispatch } = useApp()
   const [userFeat, setUserFeat] = useState(false)
   useEffect(() => {
     const localStorageLoggedInToken = JSON.parse(
@@ -29,7 +29,6 @@ function App() {
       loadCart(localStorageLoggedInToken.token, appDispatch)
     }
   }, [authDispatch, appDispatch])
-  console.log(app, auth)
   return (
     <div className="App">
       <nav className="navbar">
@@ -95,6 +94,9 @@ function App() {
         </Route>
         <Route exact path="/cart" element={<PrivateRoute />}>
           <Route exact path="/cart" element={<Cart />} />
+        </Route>
+        <Route exact path="/checkout" element={<PrivateRoute />}>
+          <Route exact path="/checkout" element={<Checkout />} />
         </Route>
         <Route exact path="/login" element={<ReversePrivateRoute />}>
           <Route exact path="/login" element={<Login />} />

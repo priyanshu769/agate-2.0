@@ -13,7 +13,10 @@ export {
   signupHandle,
   onlyFastDelivery,
   excludeOutOfStock,
-  sortProducts
+  sortProducts,
+  incrementHandler,
+  decrementHandler,
+  checkoutHandler
 } from './Utility'
 export { PrivateRoute } from './PrivateRoute.jsx'
 export { ReversePrivateRoute } from './ReversePrivateRoute.jsx'

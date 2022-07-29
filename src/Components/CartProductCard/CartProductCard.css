@@ -26,6 +26,13 @@
     font-weight: 600;
 }
 
+.btnPlusMinus {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-weight: 600;
+}
+
 @media only screen and (max-width: 480px) {
     .cartProductCard {
         width: 20rem;

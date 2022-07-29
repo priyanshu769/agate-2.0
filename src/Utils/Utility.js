@@ -221,3 +221,49 @@ export const addToCarBtnStyle = (productId, cart) => {
     return 'Already in Cart'
   } else return 'Add To Cart'
 }
+
+// Cart Item Increment/Decrement
+
+export const incrementHandler = async (
+  cartProductId,
+  loggedInToken,
+  dispatch,
+) => {
+  try {
+    const { data } = await axios.post(
+      `https://api-agate.herokuapp.com/cart/${cartProductId}/increment`,
+      {},
+      { headers: { Authorization: loggedInToken } },
+    )
+    if (data.success) {
+      loadCart(loggedInToken, dispatch)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const decrementHandler = async (
+  cartProductId,
+  loggedInToken,
+  dispatch,
+) => {
+  try {
+    const { data } = await axios.post(
+      `https://api-agate.herokuapp.com/cart/${cartProductId}/decrement`,
+      {},
+      { headers: { Authorization: loggedInToken } },
+    )
+    if (data.success) {
+      loadCart(loggedInToken, dispatch)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Checkout
+
+export const checkoutHandler = () => {
+  console.log("checkout btn clicked")
+}
